@@ -1,10 +1,12 @@
+import ReactDom from 'react-dom';
+
 import Button from './Button';
 import Card from './Card';
 import styles from './ErrorModal.module.css';
 
-const ErrorModal = (props) => {
+const ErrorMessage = (props) => {
   return (
-    <div>
+    <>
       <div className={styles.backdrop} onClick={props.onCloseError} />
       <Card className={styles.modal}>
         <header className={styles.header}>
@@ -17,7 +19,18 @@ const ErrorModal = (props) => {
           <Button onClick={props.onCloseError}>Okay</Button>
         </footer>
       </Card>
-    </div>
+    </>
+  );
+};
+
+const ErrorModal = (props) => {
+  return ReactDom.createPortal(
+    <ErrorMessage
+      title={props.title}
+      message={props.message}
+      onCloseError={props.onCloseError}
+    />,
+    document.getElementById('error-root')
   );
 };
 
